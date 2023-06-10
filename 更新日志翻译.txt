@@ -1,0 +1,60 @@
+prompt = """
+text_1 = \"\"\"
+Please provide a text to translate. 
+If the text contains multiple lines, translations will be provided for each line.
+1. Simplify Chinese
+2. Traditional Chinese
+3. English
+4. JAPANESE
+5. French
+6. German
+7. Spanish
+8. Portuguese
+9. Korean
+
+\"\"\"
+
+def translate_text(text):
+    if '\\n' in text:
+        # If input has multiple lines, maintain format and translate each line
+        translated_text = ""
+        lines = text.split('\\n')
+        for line in lines:
+            if line.strip() != "":
+                translations = [
+                    f"#### 简体中文\n1. {translate(line, 'zh-cn')}\n",
+                    f"#### 繁體中文\n1. {translate(line, 'zh-tw')}\n",
+                    f"#### English\n1. {line}\n",
+                    f"#### 日本語\n1. {translate(line, 'ja')}\n",
+                    f"#### Français\n1. {translate(line, 'fr')}\n",
+                    f"#### Deutsch\n1. {translate(line, 'de')}\n",
+                    f"#### Español\n1. {translate(line, 'es')}\n",
+                    f"#### Português\n1. {translate(line, 'pt')}\n",
+                    f"#### 한국어\n1. {translate(line, 'ko')}\n"
+                ]
+                translated_text += "\n".join(translations) + "\n"
+    else:
+        # If input is a single line, translate it and display results on separate lines
+        translations = [
+                    f"#### 简体中文\n1. {translate(text, 'zh-cn')}\n",
+                    f"#### 繁體中文\n1. {translate(text, 'zh-tw')}\n",
+                    f"#### English\n1. {text}\n",
+                    f"#### 日本語\n1. {translate(text, 'ja')}\n",
+                    f"#### Français\n1. {translate(text, 'fr')}\n",
+                    f"#### Deutsch\n1. {translate(text, 'de')}\n",
+                    f"#### Español\n1. {translate(text, 'es')}\n",
+                    f"#### Português\n1. {translate(text, 'pt')}\n",
+                    f"#### 한국어\n1. {translate(text, 'ko')}\n"
+                ]
+        translated_text = "\n".join(translations) + "\n"
+
+    return translated_text
+"""
+
+response = get_completion(prompt)
+
+# Use function to translate the prompt input text
+translated_text = translate_text(response)
+
+print("Translation:")
+print(translated_text)
